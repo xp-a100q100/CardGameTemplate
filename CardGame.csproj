@@ -43,6 +43,11 @@
   <ItemGroup>
     <Compile Include="Card\Card.cs" />
     <Compile Include="Card\CardManager.cs" />
+    <Compile Include="Exception\ExceptionBase.cs" />
+    <Compile Include="Exception\RegisterException.cs" />
+    <Compile Include="Exception\RuntimeException.cs" />
+    <Compile Include="Helper\Helper.cs" />
+    <Compile Include="Helper\Register.cs" />
     <Compile Include="Manager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -53,9 +58,6 @@
     <Compile Include="Rule\Operator\RuleOperator.cs" />
     <Compile Include="Rule\RuleType.cs" />
     <Compile Include="User\User.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="readme.txt" />

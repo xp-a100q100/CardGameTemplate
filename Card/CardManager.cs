@@ -7,34 +7,32 @@ using System.Threading.Tasks;
 namespace CardGame
 {
 
-    public static class CardManager
+    public class CardManager
     {
-        #region 属性管理
-        static Dictionary<string, List<string>> m_attribute = new Dictionary<string, List<string>>();
+        #region 构造和初始化
 
-        public static void AddAttribute(string attr, List<string> value)
+        CardManager() { }
+
+        static CardManager m_Instance = null;
+        public static CardManager Instance
         {
-            m_attribute[attr] = value;
-        }
-        public static List<string> GetAttribute(string attr)
-        {
-            if (m_attribute.ContainsKey(attr))
-            {
-                return m_attribute[attr];
-            }
-            return new List<string>();
-        }
-        public static void RemoveAttribute(string attr)
-        {
-            if (m_attribute.ContainsKey(attr))
-            {
-                m_attribute.Remove(attr);
+            get {
+                if (null == m_Instance)
+                {
+                    m_Instance = new CardManager();
+                }
+                return m_Instance; 
             }
         }
 
         #endregion
 
-        public static List<Card> MakeCards(List<string> attrs, List<string> rule)
+        #region 信息管理
+        public Register<List<string>> m_attribute = new Register<List<string>>();
+        #endregion
+
+        #region 功能函数
+        public List<Card> MakeCards(List<string> attrs, List<string> rule)
         {
 
             //******************************************************************************
@@ -71,17 +69,21 @@ namespace CardGame
                     throw new Exception("Card make failed, Attribute " + attr + " is not exist, please check it");
                 }
                 List<Card> cachelist = new List<Card>();
-                foreach (var it in m_attribute[attr])
+                foreach (var it in m_attribute.GetRegisterObj()[attr])
                 {
                     if (0 == cardlist.Count)
                     {
-                        cachelist.Add(new Card().AddAttribute(attr, it));
+                        Card c = new Card();
+                        c.m_attribute.AddRegister(attr, it);
+                        cachelist.Add(c);
                     }
                     else
                     {
                         foreach (var card in cardlist)
                         {
-                            cachelist.Add(new Card(card).AddAttribute(attr, it));
+                            Card c = new Card(card);
+                            c.m_attribute.AddRegister(attr, it);
+                            cachelist.Add(c);
                         }
                     }
                 }
@@ -96,21 +98,28 @@ namespace CardGame
 
         }
 
+        #endregion
 
+        #region 测试样例
 
-        public static void test()
+        public void test()
         {
-            AddAttribute("花色", new List<string>() { 
+            m_attribute.AddRegister("花色", new List<string>() { 
                 "黑桃","红桃","梅花","方块"
             });
-            AddAttribute("数值", new List<string>() { 
+            m_attribute.AddRegister("数值", new List<string>() { 
                 "1","2","3","4","5","6","7","8","9","10","J","Q","K"
             });
-            AddAttribute("王牌", new List<string>() { 
+            m_attribute.AddRegister("王牌", new List<string>() { 
             "大王","小王"
             });
+
+            string rule = "花色*数值+王牌";
+
+
         }
 
+        #endregion
     }
 
 

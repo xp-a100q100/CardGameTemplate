@@ -6,43 +6,22 @@ using System.Threading.Tasks;
 
 namespace CardGame
 {
-    ////Enum.TryParse(RuleType, true, "rule_attribute");
-    //public enum RuleType
-    //{
-    //    rule_null,
-    //    rule_attribute,
-    //    rule_object
-    //};
 
-    class RuleType
+    public class RuleType
     {
+        #region 构造和初始化
+        RuleType() { }
 
-        #region register
-
-        static Dictionary<string, RuleOperator> m_register = new Dictionary<string, RuleOperator>();
-
-        public static void InitRegister()
+        static RuleType m_Instance = null;
+        public static RuleType Instance
         {
-
-        }
-
-        public static void Add(string key, RuleOperator value)
-        {
-            m_register[key] = value;
-        }
-        public static RuleOperator Get(string key)
-        {
-            if (m_register.ContainsKey(key))
+            get
             {
-                return m_register[key];
-            }
-            return new RuleOperator();
-        }
-        public static void Remove(string key)
-        {
-            if (m_register.ContainsKey(key))
-            {
-                m_register.Remove(key);
+                if (null != m_Instance)
+                {
+                    m_Instance = new RuleType();
+                }
+                return m_Instance;
             }
         }
 
@@ -50,9 +29,50 @@ namespace CardGame
 
 
 
+        #region  信息管理
+
+        public  Register<RuleOperator> m_attribute = new Register<RuleOperator>();
+
+        void Register(string rule, string name = null)
+        {
+            object obj = Helper.Create(rule);
+            if (null != obj)
+            {
+                RuleOperator rop = obj as RuleOperator;
+                if (null != rop)
+                {
+                    Register(name, rop);
+                }
+                else
+                {
+                    throw new RegisterException("rule class " + rule + " is not belong class RuleOperator ");
+                }
+            }
+            else
+            {
+                throw new RegisterException("rule class " + rule + " can not be create" );
+            }
+        }
 
 
+        void Register(string name, RuleOperator rule)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                name = rule.GetName();
+            }
+            m_attribute.AddRegister(name, rule);
+        }
 
+
+        public void test()
+        {
+            Register("AttributeOperator", "Attribute");
+            Register("CardOperator", "Card");
+
+        }
+
+        #endregion
 
     }
 }

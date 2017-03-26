@@ -6,13 +6,7 @@ using System.Threading.Tasks;
 
 namespace CardGame
 {
-    class CardOperator : RuleOperator
+    public class ExceptionBase : Exception
     {
-
-
     }
-
-
-
-
 }
