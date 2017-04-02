@@ -51,11 +51,15 @@
     <Compile Include="Manager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rule\Operator\AttributeOperator.cs" />
-    <Compile Include="Rule\Operator\CardOperator.cs" />
+    <Compile Include="Rule\Type\AttributeOperator.cs" />
+    <Compile Include="Rule\Operator\AttributeOperator\AttributeAdd.cs" />
+    <Compile Include="Rule\Operator\AttributeOperator\AttributeMultiply.cs" />
+    <Compile Include="Rule\Type\CardOperator.cs" />
+    <Compile Include="Rule\Operator\Parser\ParserExpression.cs" />
+    <Compile Include="Rule\Operator\OperatorBase.cs" />
     <Compile Include="Rule\Rule.cs" />
     <Compile Include="Rule\RuleObject.cs" />
-    <Compile Include="Rule\Operator\RuleOperator.cs" />
+    <Compile Include="Rule\Type\RuleOperator.cs" />
     <Compile Include="Rule\RuleType.cs" />
     <Compile Include="User\User.cs" />
   </ItemGroup>

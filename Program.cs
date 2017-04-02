@@ -10,6 +10,10 @@ namespace CardGame
     {
         static void Main(string[] args)
         {
+            CardManager.Instance.test();
+
+
+            Console.ReadKey();
         }
     }
 }

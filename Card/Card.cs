@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace CardGame
 {
-    public class Card
+    public class Card : Register<string>
     {
-        public Register<string> m_attribute = new Register<string>();
         #region 构造函数
         public Card()
         {
@@ -16,11 +15,11 @@ namespace CardGame
         }
         public Card(Card that)
         {
-            m_attribute.SetRegisterObj(that.m_attribute.GetRegisterObj());
+            SetRegisterObj(that.GetRegisterObj());
         }
         public Card(Dictionary<string, string> attrs)
         {
-            m_attribute.SetRegisterObj(attrs);
+            SetRegisterObj(attrs);
         }
         #endregion
 

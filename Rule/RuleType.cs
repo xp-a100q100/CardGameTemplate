@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 namespace CardGame
 {
 
-    public class RuleType
+    public class RuleType : Register<RuleOperator>
     {
         #region 构造和初始化
-        RuleType() { }
+        RuleType() { test(); }
 
         static RuleType m_Instance = null;
         public static RuleType Instance
         {
             get
             {
-                if (null != m_Instance)
+                if (null == m_Instance)
                 {
                     m_Instance = new RuleType();
                 }
@@ -31,7 +31,6 @@ namespace CardGame
 
         #region  信息管理
 
-        public  Register<RuleOperator> m_attribute = new Register<RuleOperator>();
 
         void Register(string rule, string name = null)
         {
@@ -41,7 +40,7 @@ namespace CardGame
                 RuleOperator rop = obj as RuleOperator;
                 if (null != rop)
                 {
-                    Register(name, rop);
+                    Register(rop, name);
                 }
                 else
                 {
@@ -55,20 +54,20 @@ namespace CardGame
         }
 
 
-        void Register(string name, RuleOperator rule)
+        void Register(RuleOperator rule, string name)
         {
             if (string.IsNullOrEmpty(name))
             {
                 name = rule.GetName();
             }
-            m_attribute.AddRegister(name, rule);
+            AddRegister(name, rule);
         }
 
 
         public void test()
         {
-            Register("AttributeOperator", "Attribute");
-            Register("CardOperator", "Card");
+            Register(new AttributeOperator(), "Attribute");
+            Register(new CardOperator(), "Card");
 
         }
 

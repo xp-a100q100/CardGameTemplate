@@ -7,20 +7,46 @@ using System.Threading.Tasks;
 
 namespace CardGame
 {
-    public class Rule
+    public static class Rule
     {
-        public Register<RuleOperatorObject> m_attribute = new Register<RuleOperatorObject>();
-
-
         #region parser
 
-
-        public RuleObject Parser(string ruleType, List<string> content)
+        static public RuleObject Parser(string ruleType, List<string> content)
         {
-            return null;
+            ParserData dt = RuleType.Instance.GetRegister(ruleType).Parser(content);
+            RuleObject rb = new RuleObject()
+            {
+                m_data = dt,
+                m_ruleType = ruleType
+            };
+            return rb;
         }
 
+        static public List<Card> Compute(RuleObject obj)
+        {
+            List<Card> cardList = new List<Card>();
 
+            if (null == obj || null == obj.m_data || string.IsNullOrEmpty(obj.m_ruleType))
+            {
+                return cardList;
+            }
+
+            RuleOperator r = RuleType.Instance.GetRegister(obj.m_ruleType);
+
+            if (null == r)
+            {
+                return cardList;
+            }
+
+            cardList = r.runParser(obj.m_data) as List<Card>;
+
+            return cardList;
+        }
+
+        static public List<Card> ComputeParser(string ruleType, List<string> content)
+        {
+            return Compute(Parser(ruleType, content));
+        }
 
         #endregion
 

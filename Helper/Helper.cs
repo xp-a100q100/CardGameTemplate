@@ -9,9 +9,9 @@ namespace CardGame
 {
     public static class Helper
     {
-        public static List<string> Trim(List<string> content)
+        public static List<T> Trim<T>(List<T> content)
         {
-            return new List<string>(content.Where((x, i) => content.FindIndex(z => z == x) == i));
+            return new List<T>(content.Where((x, i) => content.FindIndex(z => z.Equals(x)) == i));
         }
 
 
@@ -46,5 +46,22 @@ namespace CardGame
         #endregion
 
 
+
+        #region 表达式字符串解析
+
+        public static string MatchHead(string content, string pattern)
+        {
+            if (content.Length >= pattern.Length
+                && content.Substring(0, pattern.Length) == pattern)
+            {
+                return content.Substring(pattern.Length);
+            }
+            return content;
+        }
+
+        #endregion
+
+
+    
     }
 }

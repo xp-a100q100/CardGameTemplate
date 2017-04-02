@@ -10,10 +10,12 @@ namespace CardGame
     
     public class RuleObject
     {
-        public List<string> m_attribute = new List<string>();
-        public List<RuleObject> m_rule_object = new List<RuleObject>();
-        public List<Card> m_card_object = new List<Card>();
-        public RuleOperatorObject m_operator = new RuleOperatorObject();
+        //public List<object> m_param = new List<object>();
+        //public RuleOperatorObject m_operator = new RuleOperatorObject();
+        //bool m_canBeParser = true;
+
+        public ParserData m_data;
+        public string m_ruleType;
     }
 
     public class RuleOperatorObject
@@ -21,10 +23,6 @@ namespace CardGame
         public string m_ruleType;
         public string m_ruleFunc;
     }
-
-
-
-
 
 
 }

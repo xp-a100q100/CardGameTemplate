@@ -13,14 +13,46 @@ namespace CardGame
     }
     public class Register<U, T>
     {
+        #region 状态
+        bool m_modify = false;
+        public bool Modify
+        {
+            get
+            {
+                return m_modify;
+            }
+            set
+            {
+                m_modify = value;
+            }
+        }
+        #endregion
 
         #region register
 
         Dictionary<U, T> m_register = new Dictionary<U, T>();
 
-        public void SetRegisterObj(Dictionary<U, T> val)
+        public List<U> Keys(bool isTrim = false)
+        {
+            List<U> result = new List<U>(m_register.Keys);
+            if (isTrim) result = Helper.Trim(result);
+            return result;
+        }
+
+        public List<T> Values(bool isTrim = false)
+        {
+            List<T> result = new List<T>(m_register.Values);
+            if (isTrim) result = Helper.Trim(result);
+            return result;
+        }
+
+        public Register<U, T> SetRegisterObj(Dictionary<U, T> val)
         {
             m_register = new Dictionary<U, T>(val);
+
+            Modify = true;
+
+            return this;
         }
         public Dictionary<U, T> GetRegisterObj()
         {
@@ -32,9 +64,13 @@ namespace CardGame
             return m_register.ContainsKey(key);
         }
 
-        public void AddRegister(U key, T value)
+        public Register<U, T> AddRegister(U key, T value)
         {
             m_register[key] = value;
+
+            Modify = true;
+
+            return this;
         }
         public T GetRegister(U key)
         {
@@ -44,12 +80,15 @@ namespace CardGame
             }
             return default(T);
         }
-        public void RemoveRegister(U key)
+        public Register<U, T> RemoveRegister(U key)
         {
             if (ContainsKey(key))
             {
                 m_register.Remove(key);
+
+                Modify = true;
             }
+            return this;
         }
 
         public List<U> FindKeyWithValue(T t)
@@ -69,6 +108,7 @@ namespace CardGame
                 return val[0];
             }
         }
+
 
         #endregion
 
